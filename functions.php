@@ -15,6 +15,158 @@ funtions.php
 
 register_nav_menus();
 
+/**********************
+page title filter
+***********************/
+/*function sbmr_filter_wp_title( $currenttitle, $sep, $seplocal ) {
+  $site_name = get_bloginfo( 'name' );
+  $full_title = $site_name . $currenttitle;
+
+  if ( is_front_page() || is_home() ) {
+    $site_desc = get_bloginfo( 'description' );
+    $full_title .= ' ' . $sep . ' ' . $site_desc;
+  }
+  return $full_title;
+}*/
+
+add_filter( 'wp_title', 'sbmr_filter_wp_title', 10, 3 );
+
+/**********************
+post query
+***********************/
+function sbmr_query_posts( $sbmr_args, $sbmr_is_where = false, $sbmr_where_filter_name = '' ) {
+
+	if ( empty( $sbmr_is_where ) ) {
+		return new WP_Query( $sbmr_args );
+	} else {
+		add_filter( 'posts_where', $sbmr_where_filter_name, 10, 3 );
+		$sbmr_query = new WP_Query( $sbmr_args );
+		remove_filter( 'posts_where',  $sbmr_where_filter_name );
+		return $sbmr_query;
+	}
+}
+
+/*
+* where filters for post query
+*/
+function smbr_7_day_where( $where = '' ) {
+    // posts in the last 10 days
+    $where .= " AND post_date > '" . date( 'Y-m-d', strtotime( '-7 days' ) ) . "'";
+    return $where;
+}
+
+/**********************
+generate auto excerpt
+***********************/
+function sbmr_generate_auto_excerpt( $sbmr_content, $num_of_chars, $sbmr_permalink ) {
+	for ( $i = 0; $i < strlen( $sbmr_content ); $i++ ) { 
+
+	    $sbmr_excerpt = 
+	    ( $num_of_chars + $i >= strlen( $sbmr_content ) ? 
+	    	$sbmr_content : ( $sbmr_content{ $num_of_chars + i} == " " ? 
+	    	substr( $sbmr_content, 0, $num_of_chars + $i ) : "" ) );
+
+	    $sbmr_excerpt = $sbmr_excerpt . ' ' . $sbmr_permalink;
+
+	    if ( $sbmr_excerpt != '') {
+	        return nl2br( $sbmr_excerpt );
+        } 
+    }
+}
+
+
+
+/**********************
+display_fresh_posts
+***********************/
+function sbmr_display_fresh_posts() {
+	// Start of the mini-loop, specifies which category to look in and how many posts to pull//
+	$smbr_args = array (
+		'showposts' =>3
+	);
+
+	$sbmr_query = sbmr_query_posts( $smbr_args, true, 'smbr_7_day_where' );
+
+	if ( $sbmr_query->found_posts > 3 ) {
+
+		while ( $sbmr_query->have_posts() ) : $sbmr_query->the_post();
+		 	$do_not_duplicate = $post->ID;
+			?>
+			<div class="col-wide fresh-stories__story1">'
+					<h2 class="fresh-stories__heading">
+						<a href="<?php the_permalink(); ?>"><?php esc_attr( get_the_title() ); ?></a>
+					</h2>
+					<p>
+						<a href="<?php the_permalink(); ?>"><img src="<?php bloginfo('template_url') ?>/img/x.jpg" /></a>
+						<span>
+							<?php 
+								echo esc_attr( 
+									sbmr_generate_auto_excerpt( 
+										the_content(), 
+										$num_of_chars = 10, 
+										$sbmr_permalink = '<a href="<?php the_permalink(); ?>"> more ...</a>'
+									) 
+								);
+							?>
+						</span>
+						<span class="fresh-stories_meta">
+							Posted on <?php esc_attr( the_time( 'F jS, Y' ) ) ?> at 
+							<?php esc_attr( the_time( 'g:i a' ) ) ?> by 
+							<?php esc_attr( the_author_posts_link() ) ?>
+						</span>
+					</p>
+				</div>
+			<?php
+		endwhile;
+
+		wp_reset_postdata();
+
+	} else {
+		$smbr_args = array (
+			'showposts' => 3,
+			'orderby' => 'rand'
+		);
+
+		$sbmr_query = sbmr_query_posts( $smbr_args);
+
+		while ( $sbmr_query->have_posts() ) : $sbmr_query->the_post();
+		 	$do_not_duplicate = $post->ID;
+			?>
+			<div class="col-wide fresh-stories__story1">'
+					<h2 class="fresh-stories__heading">
+						<a href="<?php the_permalink(); ?>"><?php esc_attr( get_the_title() ); ?></a>
+					</h2>
+					<p>
+						<a href="<?php the_permalink(); ?>"><img src="<?php bloginfo('template_url') ?>/img/x.jpg" /></a>
+						<span>
+						<?php 
+							echo esc_attr( 
+								sbmr_generate_auto_excerpt( 
+									the_content(), 
+									$num_of_chars = 200, 
+									$sbmr_permalink = '<a href="<?php the_permalink(); ?>"> more ...</a>'
+								) 
+							);
+						?>
+						</span>
+						<span class="fresh-stories_meta">
+							Posted on <?php esc_attr( the_time( 'F jS, Y' ) ) ?> at 
+							<?php esc_attr( the_time( 'g:i a' ) ) ?> by 
+							<?php esc_attr( the_author_posts_link() ) ?>
+						</span>
+					</p>
+				</div>
+			<?php
+		endwhile;
+
+		wp_reset_postdata();
+
+	}
+	
+}
+
+
+
 /*require_once( SBMR_DIR .'/functions/sbmr-device-router.php' );
 $sbmr_Device_Router = new sbmr_Device_Router();*/
 /**

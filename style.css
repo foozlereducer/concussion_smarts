@@ -1,5 +1,5 @@
 /******************************************************************
-Theme Name: Concussion Smarts
+Theme Name: Concussion Smarts 2
 Theme URI: http://www.liviam.ca
 Description: This is a custom theme developed for Concussion Smarts
 Author: Steve Browning
@@ -639,7 +639,7 @@ banner
 .row--banner
 {
 	background-color: #626e6d;
-	background-image: url(../img/banner-small.jpg);
+	background-image: url(img/banner-small.jpg);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -647,7 +647,7 @@ banner
 
 @media (min-width: 38em)
 {
-	.row--banner { background-image: url(../img/banner.jpg); }
+	.row--banner { background-image: url(img/banner.jpg); }
 }
 
 /* ----------------------------
@@ -658,8 +658,8 @@ banner story
 {
 	background-color: #626e6d;
 	background-color: #A7B0BD;;
-	/*background-image: url(../img/banner-small.jpg);
-	background-repeat: no-repeat;*/
+	background-image: url(img/banner-small.jpg);
+	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
 }
@@ -712,7 +712,6 @@ header
 {
 	position: relative;
 	float: right;
-	width: 100%;
 	margin: 1em auto ;
 	text-align: center;
 	top: 0;
@@ -766,8 +765,8 @@ header
 		/* 40px/18px - 36px/18px */
 	}
 	
-	.header__nav { 
-		width: 12em;
+	.header__nav {
+		margin-top: 1.5em;
 		float: right;
 		vertical-align: top;
 	}
@@ -881,6 +880,12 @@ fresh stories
 	border: 1px solid #444;
 }
 
+.fresh-stories_meta
+{
+	font-size: 0.8em;
+	font-style: italic;
+	color:#6b8ec3;
+}
 .stories {
 	display: block;
 	width:97%;
@@ -941,7 +946,7 @@ widgets
 .cs_widget__bike
 {
 	height: 90px;
-	background: url(../assets/img/icon-bike.png) no-repeat center;
+	background: url(img/icon-bike.png) no-repeat center;
 	background-size: contain;
 }
 
@@ -971,21 +976,21 @@ features
 .features__bike
 {
 	height: 90px;
-	background: url(../img/icon-bike.png) no-repeat center;
+	background: url(img/icon-bike.png) no-repeat center;
 	background-size: contain;
 }
 
 .features__phone
 {
 	height: 149px;
-	background: url(../img/icon-phone.png) no-repeat center;
+	background: url(img/icon-phone.png) no-repeat center;
 	background-size: contain;
 }
 
 .features__safe
 {
 	height: 80px;
-	background: url(../img/icon-safe.png) no-repeat center;
+	background: url(img/icon-safe.png) no-repeat center;
 	background-size: contain;
 }
 
@@ -1106,7 +1111,7 @@ facts
 	margin: 0 auto 1.3333em;
 	/* 24px/16px */
 	background-repeat: no-repeat;
-	background-image: url(../img/icon-sprite.png);
+	background-image: url(img/icon-sprite.png);
 }
 
 .facts-list__id { background-position: 0 0; }
@@ -1205,7 +1210,7 @@ press
 	.cs_widget__bike
 	{
 		height: 90px;
-		background: url(../img/icon-bike.png) no-repeat center;
+		background: url(img/icon-bike.png) no-repeat center;
 		background-size: contain;
 	}
 }
