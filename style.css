@@ -868,11 +868,12 @@ stories
 /* ----------------------------
 fresh stories
 ---------------------------- */
-.fresh-stories { text-align: left;}
+.fresh-stories { 
+	text-align: left;
+	margin-top: 2em;
+}
 
-.fresh-stories__story1,
-.fresh-stories__story2,
-.fresh-stories__story3
+.fresh-stories__story1
 {
 	display: block;
 	width:97%;
@@ -916,10 +917,23 @@ fresh stories
 	.fresh-stories__story3
 	{
 		display: inline-block;
-		width: 30%;
+		width: 28%;
+		font-size: 0.9em;
 		margin-left: 3%;
+		padding: 0.3em;
 		height: 200px;
 	}
+
+	.fresh-stories__story1 h2 a
+	{
+		text-decoration: none;
+		color: #666;
+	}
+	.fresh-stories__story1 span a {
+		text-decoration: none;
+		color: #af0000;
+	}
+
 }
 
 /* ----------------------------
@@ -973,21 +987,21 @@ features
 
 .features__text { margin: 0; }
 
-.features__bike
+.features__top
 {
 	height: 90px;
 	background: url(img/icon-bike.png) no-repeat center;
 	background-size: contain;
 }
 
-.features__phone
+.features__mid
 {
 	height: 149px;
 	background: url(img/icon-phone.png) no-repeat center;
 	background-size: contain;
 }
 
-.features__safe
+.features__bot
 {
 	height: 80px;
 	background: url(img/icon-safe.png) no-repeat center;
@@ -1022,9 +1036,9 @@ features
 
 @media (min-width: 50em)
 {
-	.features__bike { height: 154px; }
-	.features__phone { height: 296px; }
-	.features__safe { height: 141px; }
+	.features__top { height: 154px; }
+	.features__mid { height: 296px; }
+	.features__bot { height: 141px; }
 }
 
 /* ----------------------------

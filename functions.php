@@ -58,20 +58,16 @@ function smbr_7_day_where( $where = '' ) {
 /**********************
 generate auto excerpt
 ***********************/
-function sbmr_generate_auto_excerpt( $sbmr_content, $num_of_chars, $sbmr_permalink ) {
-	for ( $i = 0; $i < strlen( $sbmr_content ); $i++ ) { 
+function sbmr_generate_auto_excerpt( $sbmr_content, $num_of_words ) {
+	
+	$sbmr_words = explode( ' ', $sbmr_content );
+	$sbmr_excerpt = '';
 
-	    $sbmr_excerpt = 
-	    ( $num_of_chars + $i >= strlen( $sbmr_content ) ? 
-	    	$sbmr_content : ( $sbmr_content{ $num_of_chars + i} == " " ? 
-	    	substr( $sbmr_content, 0, $num_of_chars + $i ) : "" ) );
+	for ( $i = 0; $i <= $num_of_words; $i++ ) {
+		$sbmr_excerpt .= $sbmr_words[ $i ] . " ";
+	}
 
-	    $sbmr_excerpt = $sbmr_excerpt . ' ' . $sbmr_permalink;
-
-	    if ( $sbmr_excerpt != '') {
-	        return nl2br( $sbmr_excerpt );
-        } 
-    }
+	return $sbmr_excerpt;
 }
 
 
@@ -81,16 +77,17 @@ display_fresh_posts
 ***********************/
 function sbmr_display_fresh_posts() {
 	// Start of the mini-loop, specifies which category to look in and how many posts to pull//
-	$smbr_args = array (
+	$sbmr_args = array (
 		'showposts' =>3
 	);
 
-	$sbmr_query = sbmr_query_posts( $smbr_args, true, 'smbr_7_day_where' );
+	$sbmr_query = sbmr_query_posts( $sbmr_args, true, 'smbr_7_day_where' );
 
 	if ( $sbmr_query->found_posts > 3 ) {
 
 		while ( $sbmr_query->have_posts() ) : $sbmr_query->the_post();
 		 	$do_not_duplicate = $post->ID;
+		 	$sbmr_content = get_the_content();
 			?>
 			<div class="col-wide fresh-stories__story1">'
 					<h2 class="fresh-stories__heading">
@@ -100,14 +97,16 @@ function sbmr_display_fresh_posts() {
 						<a href="<?php the_permalink(); ?>"><img src="<?php bloginfo('template_url') ?>/img/x.jpg" /></a>
 						<span>
 							<?php 
-								echo esc_attr( 
-									sbmr_generate_auto_excerpt( 
-										the_content(), 
-										$num_of_chars = 10, 
-										$sbmr_permalink = '<a href="<?php the_permalink(); ?>"> more ...</a>'
-									) 
-								);
+								
+								$sbmr_excerpt = sbmr_generate_auto_excerpt( get_the_post(), 200 );
+								
+								if ( empty( $sbmr_excerpt ) ) {
+									'no exerpt available';
+								} else {
+									echo( esc_attr( $sbmr_excerpt ) );
+								}
 							?>
+							<a href="<?php get_permalink(); ?>"> more </a>
 						</span>
 						<span class="fresh-stories_meta">
 							Posted on <?php esc_attr( the_time( 'F jS, Y' ) ) ?> at 
@@ -122,33 +121,35 @@ function sbmr_display_fresh_posts() {
 		wp_reset_postdata();
 
 	} else {
-		$smbr_args = array (
+		$sbmr_args = array (
 			'showposts' => 3,
 			'orderby' => 'rand'
 		);
 
-		$sbmr_query = sbmr_query_posts( $smbr_args);
+		$sbmr_query = sbmr_query_posts( $sbmr_args );
 
 		while ( $sbmr_query->have_posts() ) : $sbmr_query->the_post();
 		 	$do_not_duplicate = $post->ID;
+		 	$sbmr_excerpt = sbmr_generate_auto_excerpt( get_the_content(), 10 );
 			?>
-			<div class="col-wide fresh-stories__story1">'
+			<div class="col-wide fresh-stories__story1">
 					<h2 class="fresh-stories__heading">
-						<a href="<?php the_permalink(); ?>"><?php esc_attr( get_the_title() ); ?></a>
+						<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 					</h2>
 					<p>
-						<a href="<?php the_permalink(); ?>"><img src="<?php bloginfo('template_url') ?>/img/x.jpg" /></a>
+						<a href="<?php the_permalink(); ?>"><img src="<?php the_post_thumbnail( 'thumbnail' ) ?>" /></a>
 						<span>
-						<?php 
-							echo esc_attr( 
-								sbmr_generate_auto_excerpt( 
-									the_content(), 
-									$num_of_chars = 200, 
-									$sbmr_permalink = '<a href="<?php the_permalink(); ?>"> more ...</a>'
-								) 
-							);
+						<?php 	
+							if ( empty( $sbmr_excerpt ) ) {
+								'no exerpt available';
+							} else {
+								echo( $sbmr_excerpt );
+							}
 						?>
+						<a href="<?php the_permalink(); ?>">more ...</a>
 						</span>
+					</p>
+					<p>
 						<span class="fresh-stories_meta">
 							Posted on <?php esc_attr( the_time( 'F jS, Y' ) ) ?> at 
 							<?php esc_attr( the_time( 'g:i a' ) ) ?> by 
@@ -165,8 +166,95 @@ function sbmr_display_fresh_posts() {
 	
 }
 
+/**********************
+Side bars
+***********************/
+if ( function_exists('register_sidebar') ) {
+	
+	/**********************
+	Front Page Dynamic Sidebars
+	***********************/
+	register_sidebar(
+		array(
+			'name'=>'front_page_features_top_l',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		)
+	);
 
+	register_sidebar(
+		array(
+			'name'=>'front_page_features_top_r',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		)
+	);
 
+	register_sidebar(
+		array(
+			'name'=>'front_page_features_mid_l',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name'=>'front_page_features_mid_r',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name'=>'front_page_features_bot_l',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name'=>'front_page_features_bot_r',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name'=>'front_page_mid_l',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name'=>'front_page_mid_r',
+			'before_widget' => '',
+			'after_widget' => '',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>',
+		)
+	);
+
+}
 /*require_once( SBMR_DIR .'/functions/sbmr-device-router.php' );
 $sbmr_Device_Router = new sbmr_Device_Router();*/
 /**
@@ -179,3 +267,4 @@ $sbmr_Device_Router = new sbmr_Device_Router();*/
 /* Directives below that run on each page load */
 
 /*require_once( SBMR_DIR .'/functions/sbmr-site-functions.php');*/
+?>

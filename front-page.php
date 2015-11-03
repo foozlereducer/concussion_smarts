@@ -20,7 +20,7 @@ get_header();
 	</section>
 </div>
 <!-- freshest stories -->
-<div class="row row--padding-wide fresh-stories">
+<div class="row  fresh-stories">
 	<div class="row container-wide">
 	<?php
 		sbmr_display_fresh_posts();
@@ -31,41 +31,28 @@ get_header();
 <div class="row row--white row--padding-wide features">
 	<div class="row container-medium">
 		<div class="row features__row">
-			<div class="col-narrow--right features__bike">
+			
+			<div class="col-narrow--right"> <!-- features__top -->
+				<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('front_page_features_top_l') ); ?>
 			</div>
 			<div class="col-wide">
-				<h2 class="features__heading">
-					Easy To Get Started...
-					Easy To Get Started...
-					Easy To Get Started...
-				</h2>
-				<p class="features__text">
-					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
-				</p>
+				<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('front_page_features_top_r') ); ?>
 			</div>
 		</div>
 		<div class="row features__row">
-			<div class="col-narrow features__phone">
+			<div class="col-narrow">
+				<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('front_page_features_mid_l') ); ?>
 			</div>
 			<div class="col-wide--right features__padding">
-				<h2 class="features__heading">
-					Facilitator Lead Sessions
-				</h2>
-				<p class="features__text">
-					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
-				</p>			
+				<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('front_page_features_mid_r') ); ?>		
 			</div>
 		</div>
 		<div class="row features__row">
-			<div class="col-narrow--right features__safe">
+			<div class="col-narrow--right">
+				<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('front_page_features_bot_l') ); ?>
 			</div>
 			<div class="col-wide">
-				<h2 class="features__heading">
-					Training Packages
-				</h2>
-				<p class="features__text">
-					Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
-				</p>
+				<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('front_page_features_bot_r') ); ?>
 			</div>
 		</div>
 	</div>
@@ -74,10 +61,10 @@ get_header();
 <!-- photos -->
 <div class="row">
 	<div class="col-medium">
-		<img src="<?php bloginfo('template_url'); ?>/img/photo1.jpg" alt="Writing on notepaper">
+		<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('front_page_mid_l') ); ?>
 	</div>
 	<div class="col-medium">
-		<img src="<?php bloginfo('template_url'); ?>/img/photo2.jpg" alt="Holding a mobile device showing a graph">
+		<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('front_page_mid_r') ); ?>
 	</div>
 </div>
 
