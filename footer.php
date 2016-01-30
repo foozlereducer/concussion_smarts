@@ -1,8 +1,8 @@
+<div class="row row--dark-grey row--padding-medium footer">
 	<footer class="row container-wide" role="contentinfo">
-		<?php wp_title(); ?>
 		<div class="col-wide footer__info">
 			<div class="footer__logo">
-				<img src="<?php bloginfo('template_url'); ?>/img/logos/concussion_smarts_final_small.png" alt="concussion smarts">
+				<img src="assets/img/logos/concussion_smarts_final_small.png" alt="concussion smarts">
 			</div>
 			<div class="row">
 				<div class="col-medium">
@@ -29,6 +29,7 @@
 			</div>
 		</div>
 		<div class="col-narrow--right footer__cta">
-			<a href="#"><img src="<?php bloginfo('template_url'); ?>/img/icon-cta.png" alt="App store"></a>
+			<a href="#"><img src="assets/img/icon-cta.png" alt="App store"></a>
 		</div>
 	</footer>
+</div>

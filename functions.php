@@ -76,6 +76,9 @@ function sbmr_generate_auto_excerpt( $sbmr_content, $num_of_words ) {
 display_fresh_posts
 ***********************/
 function sbmr_display_fresh_posts() {
+
+	global $post;
+	
 	// Start of the mini-loop, specifies which category to look in and how many posts to pull//
 	$sbmr_args = array (
 		'showposts' =>3

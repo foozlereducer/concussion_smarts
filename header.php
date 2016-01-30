@@ -58,4 +58,7 @@
 		<script src="assets/js/html5.js"></script>
 		<script src="assets/js/respond.min.js"></script>
 	<![endif]-->
+	<?php
+		wp_head();
+	?>
 </head>

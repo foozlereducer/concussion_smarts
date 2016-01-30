@@ -3,13 +3,15 @@ get_header();
 ?>
 <body <?php body_class( 'container' ); ?> >
 <!-- banner -->
-<div class="row row--banner">
+<div class="row row--banner_home">
 	<header class="row container-wide header" role="banner">
+
 		<div class="header__logo">
 			<img src="<?php bloginfo('template_url'); ?>/img/logos/logo_bk.png" alt="Concussion Smarts">
 		</div>
-		<?php
-		require_once( trailingslashit( get_template_directory() ). 'nav-banner.php' );
+		<?php 
+			// slider here 
+			require_once( trailingslashit( get_template_directory() ). 'nav-banner.php' );
 		?>
 	</header>
 	<section class="row container-medium banner-content">
