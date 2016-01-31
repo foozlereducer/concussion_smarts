@@ -21,14 +21,10 @@ get_header();
 		<!--<a href="#"><img src="<?php bloginfo('template_url'); ?>/img/icon-cta.png" alt="App store"></a> -->
 	</section>
 </div>
+
 <!-- freshest stories -->
-<div class="row  fresh-stories">
-	<div class="row container-wide">
-	<?php
-		sbmr_display_fresh_posts();
-	?>
-	</div>
-</div>
+<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('body_top_content') ); ?>
+	
 <!-- features -->
 <div class="row row--white row--padding-wide features">
 	<div class="row container-medium">

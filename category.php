@@ -1,23 +1,12 @@
 <?php
 get_header();
+( ! isset( $class ) ? $class = get_body_class( $class ) : nothing );
+$class = implode( ',', $class );
 ?>
 
-<body <?php body_class( 'container' $class ); ?> >
+<body <?php body_class() ?> >
 <!-- banner -->
-<?php
-	$cats = get_the_category();
-	switch ( $cats[0]->name ) {
-		case 'resources':
-			echo '<div class="row row--banner_resources">';
-			break;
-		case 'contact':
-			echo '<div class="row row--banner_contact">';
-			break;
-		default:
-			echo '<div class="row row--banner_cs_widget">';
-		 	break;
-	}
-?>
+<?php smbr__category_banner(); ?>
 
 	<header class="row container-wide header" role="banner">
 		<div class="header__logo">
@@ -81,6 +70,10 @@ get_header();
 </div>
 
 <!-- footer -->
-<?php get_footer(); ?>
-</body>
+<div class="row row--dark-grey row--padding-medium footer">
+<?php 
+	wp_footer();
+	get_footer();
+?>	
+</div>
 </html>
