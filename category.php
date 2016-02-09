@@ -1,10 +1,21 @@
 <?php
-get_header();
-( ! isset( $class ) ? $class = get_body_class( $class ) : nothing );
-$class = implode( ',', $class );
+/**
+ * The default template for displaying content
+ *
+ * Used for both single and index/archive/search.
+ *
+ * @package SMBR
+ * @subpackage SMBR Mobile Responsive
+ * @since SMBR Mobile Responsive 1.0
+ */
 ?>
 
-<body <?php body_class() ?> >
+<?php
+get_header();
+?>
+
+<body <?php body_class(); ?> >
+<!-- Category Page -->
 <!-- banner -->
 <?php smbr__category_banner(); ?>
 
@@ -17,7 +28,7 @@ $class = implode( ',', $class );
 			require_once( trailingslashit( get_template_directory() ). 'nav-banner.php' );
 		?>
 		<section class="row container-medium banner-content__heading_bio">
-			<h1 class='banner-content_heading_layout '>Stories</h1>
+			<h1 class='banner-content_heading_layout '><?php the_category() ?></h1>
 			<!--<a href="#"><img src="assets/img/icon-cta.png" alt="App store"></a> -->
 		</section>
 	</header>
@@ -26,54 +37,27 @@ $class = implode( ',', $class );
 <!-- freshest stories -->
 
 <div class="row container-medium row--margin">
-	<div class="row ">
-			<div class="col-wide-stories stories__text">
-				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-				<article>
-				
-					<h2><a href="<?php the_permalink(); ?>" title="For More Info on <?php
-        				the_title_attribute(); ?>"><?php the_title(); ?></a>
-        			</h2>
-    				<?php the_content(); ?>
-				<?php endwhile; else: ?>
-			   		<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
-			  	<?php endif; ?>
-			  	</article>
+	<div class="row featured-content">
+	</div>
+</div>
+
+<div id="smbr-content" class="row container-medium row--margin">
+	<div class="row features__row">
+		<div class="col-wide-stories stories__text">
+			<?php get_template_part( 'content' ); ?>
 		</div>
 		<div class="col-narrow-stories cs_widget ">
-			<div class="cs_widget__row">
-				<div class="features__bike ">
-				</div>
-			</div>
-			<div class="cs_widget__row">
-				<div class="features__bike ">
-				</div>
-			</div>
-			<div class="cs_widget__row">
-				<div class="features__bike ">
-				</div>
-			</div>
-			<div class="cs_widget__row">
-				<div class="features__bike ">
-				</div>
-			</div>
-			<div class="cs_widget__row">
-				<div class="features__bike ">
-				</div>
-			</div>
-			<div class="cs_widget__row">
-				<div class="features__bike ">
-				</div>
-			</div>
+			<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('category_index') ); ?>
+	
 		</div>
 	</div>
 </div>
 
 <!-- footer -->
-<div class="row row--dark-grey row--padding-medium footer">
+<div id='smbr-footer' class="row row--dark-grey row--padding-medium footer">
 <?php 
 	wp_footer();
 	get_footer();
 ?>	
-</div>
+</div><!-- .ow row--dark-grey row--padding-medium footer -->
 </html>
