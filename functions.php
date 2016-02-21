@@ -8,6 +8,9 @@
 // Report all PHP errors
 error_reporting( E_ALL );
 
+// Device detection
+require get_template_directory() . '/functions/smbr-device-router.php';
+
 // Site Functions
 require get_template_directory() . '/functions/smbr-site-functions.php';
 

@@ -1,6 +1,5 @@
-<!doctype html>
-<html prefix="og: http://ogp.me/ns#" lang="en">
 <?php
+/* Template Name: Contact Us */ 
 get_header();
 ?>
 <body>
@@ -17,11 +16,6 @@ get_header();
 		?>
 		<section class="row container-medium banner-content">
 			<h1 class='banner-content__heading'><?php echo smbr_get_the_category() ?></h1>
-
-			<?php if( 'bio' == smbr_get_the_category() ) { ?>
-				<span class='smbr-caption'>Karen Saevil-Turgeon - Concussion Educator</span>
-			<?php } ?>
-			<!--<a href="#"><img src="assets/img/icon-cta.png" alt="App store"></a> -->
 		</section>
 	</header>
 	
@@ -47,7 +41,7 @@ get_header();
 					get_search_form();
 				}
 			?>
-			<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('story_side') ); ?>
+			<?php if ( !function_exists('dynamic_sidebar') || ! dynamic_sidebar('contact') ); ?>
 	
 		</div>
 	</div>

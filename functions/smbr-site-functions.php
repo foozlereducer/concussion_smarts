@@ -14,25 +14,81 @@ function smbr_jetpack_setup() {
 	add_theme_support(
 		'infinite-scroll',
 		array(
+			'type' => 'click',
 			'container' => 'smbr-content',
-			'footer' => 'smbr-footeru',
-    		'posts_per_page' => 5,
+			'footer' => 'smbr-footer',
+    		'posts_per_page' => 4,
 		)
 	);
 }
 
-function smbr__category_banner() {
 
+
+function smbr_get_the_category() {
 	$cats = get_the_category();
-	switch ( $cats[0]->name ) {
-		case 'resources':
-			echo '<div class="row row--banner_resources">';
+	
+	if ( ! empty(  $_GET ) ) {
+		// Search
+		if ( isset( $_GET['s'] ) ) {
+			return 'search';
+		}
+	} else if ( is_category() ) {
+	 	return $cats[0]->name;
+	} else if ( is_page() ) {
+		return smbr_the_slug();
+	} else if ( is_front_page() ) {
+		return 'home';
+	} else {
+		return $cats[0]->name;
+	}
+}
+
+function smbr_the_slug() {
+	$post_data = get_post($post->ID, ARRAY_A );
+	return $post_data['post_name'];
+ }
+
+function smbr__category_banner() {
+	/**
+	* Initialte the device router
+	*/
+	$smbr_Device_Router = new sbmr_Device_Router();
+
+	switch ( smbr_get_the_category() ) {
+		case 'bio':
+			echo(
+				( 'mobile' == $smbr_Device_Router->get_device() ) ? '<div class="row row--banner_bio__mobile">' : '<div class="row row--banner_bio">'
+				);
+			break;
+		case 'blog':
+			echo(
+				( 'mobile' == $smbr_Device_Router->get_device() ) ? '<div class="row row--banner_blog__mobile">' : '<div class="row row--banner_blog">'
+			);
 			break;
 		case 'contact':
-			echo '<div class="row row--banner_contact">';
+			echo(
+				( 'mobile' == $smbr_Device_Router->get_device() ) ? '<div class="row row--banner_contact__mobile">' : '<div class="row row--banner_contact">'
+			);
+			break;
+		case 'resources':
+			echo(
+				( 'mobile' == $smbr_Device_Router->get_device() ) ? '<div class="row row--banner_resources__mobile">' : '<div class="row row--banner_resources">'
+			);
+			break;
+		case 'francais':
+			echo(
+				( 'mobile' == $smbr_Device_Router->get_device() ) ? '<div class="row row--banner_francais__mobile">' : '<div class="row row--banner_francais">'
+			);
+			break;
+		case 'search':
+			echo(
+				( 'mobile' == $smbr_Device_Router->get_device() ) ? '<div class="row row--banner_search__mobile">' : '<div class="row row--banner_search">'
+			);
 			break;
 		default:
-			echo '<div class="row row--banner_cs_widget">';
+			echo(
+				( 'mobile' == $smbr_Device_Router->get_device() ) ? '<div class="row row--banner row--banner_home__mobile">' : '<div class="row row--banner_home">'
+			);
 		 	break;
 	}
 }
@@ -42,14 +98,27 @@ generate auto excerpt
 ***********************/
 function smb_generate_auto_excerpt( $content, $num_of_words ) {
 	
-	$words = explode( ' ', $content );
-	$excerpt = '';
+	if ( ! empty( $content ) ) {
+		$words = explode( ' ', $content );
+		
+		if ( count( $words ) < $num_of_words ) {
+			return $content;
+		}
 
-	for ( $i = 0; $i <= $num_of_words; $i++ ) {
-		$excerpt .= $words[ $i ] . " ";
+		$excerpt = '';
+
+		if ( ! empty( $words ) ) {
+			for ( $i = 0; $i <= $num_of_words; $i++ ) {
+
+				$excerpt .= $words[ $i ] . " ";
+			}
+
+			return $excerpt;
+		}
+
+		return '';
 	}
-
-	return $excerpt;
+	
 }
 
 /*require_once( SBMR_DIR .'/functions/sbmr-device-router.php' );
