@@ -5,25 +5,19 @@
  * @package Modern-Responsive
  */
 
-// Path of the parent theme
-define('SBMR_DIR',__DIR__);
 // Report all PHP errors
-error_reporting(-1);
-/**********************
-funtions.php
-***********************/
+error_reporting( E_ALL );
 
-register_nav_menus();
+// Device detection
+require get_template_directory() . '/functions/smbr-device-router.php';
 
-/*require_once( SBMR_DIR .'/functions/sbmr-device-router.php' );
-$sbmr_Device_Router = new sbmr_Device_Router();*/
-/**
- * Detect device
- */
-/*function csmrt_get_device_type() {
-	return $sbmr_Device_Router->get_device();
-}*/
+// Site Functions
+require get_template_directory() . '/functions/smbr-site-functions.php';
 
-/* Directives below that run on each page load */
+// Theme Setting
+require get_template_directory() . '/functions/smbr-theme-settings.php';
 
-/*require_once( SBMR_DIR .'/functions/sbmr-site-functions.php');*/
+// Side Bars
+require get_template_directory() . '/functions/smbr-sidebars.php';
+
+smbr_jetpack_setup();
